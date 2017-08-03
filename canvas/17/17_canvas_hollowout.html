@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_17_根据非零环绕原则创建镂空剪纸效果</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa;display:block;margin:30px auto"></canvas>
+	
+	<script type="text/javascript">
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+
+			canvas.width = 800 ; 
+			canvas.height = 800;
+
+			var context = canvas.getContext("2d");
+
+			// 控制路径方向
+			// beginPath -- closePath
+			context.beginPath();
+			// pathrect - 顺时针
+			context.rect( 100 , 100 , 600 , 600 );
+			//pathrect - 逆时针
+			pathRect( context , 200 , 200 , 400 , 200 );
+			// pathtriangle - 逆时针
+			pathTriangle( context , 300 , 450 , 150 , 650 , 450 , 650 );
+			// patharc - 逆时针
+			context.arc( 550 , 550 , 100 , 0 , 2 * Math.PI , true );
+			context.closePath();
+
+			// set state  根据路径方向，以非零环绕原则，非0就填充
+			// 填色
+			// context.fillStyle = "#058";
+			// 填渐变
+			var linearGradient = context.createLinearGradient( 0 , 0 , 0 , 800 );
+			linearGradient.addColorStop( 0.0 , "red" );
+			linearGradient.addColorStop( 0.25 , "orange" );
+			linearGradient.addColorStop( 0.5 , "yellow" );
+			linearGradient.addColorStop( 0.75 , "green" );
+			linearGradient.addColorStop( 1.0 , "purple" );
+			context.fillStyle = linearGradient;
+			// 填图片
+			// var backgroundImage = new Image();
+			// backgroundImage.src = "1.png";
+			// backgroundImage.onload = function(){
+			// 	var pattern = context.createPattern( backgroundImage , "repeat" );
+			// 	context.fillStyle = pattern;	
+			// 	// context.fill();
+			// }
+
+			context.shadowColor = "#A19F9F";
+			context.shadowOffsetX = 10;
+			context.shadowOffsetY = 10 ;
+			context.shadowBlur = 10;
+
+			context.fill();
+		};
+
+		function pathRect( cxt , x , y , width , height ){
+			// cxt.beginPath();
+			cxt.moveTo( x , y );
+			cxt.lineTo( x , y + height );
+			cxt.lineTo( x + width , y + height );
+			cxt.lineTo( x + width , y );
+			cxt.lineTo( x , y );
+			// cxt.closePath();
+		}
+
+		function pathTriangle( cxt , x1 , y1 , x2 , y2 , x3 , y3 ){
+			// cxt.beginPath();
+			cxt.moveTo( x1 , y1 );
+			cxt.lineTo( x2 , y2 );
+			cxt.lineTo( x3 , y3 );
+			cxt.lineTo( x1 , y1 );
+			// cxt.closePath();
+		}
+	</script>
+
+</body>
+</html>

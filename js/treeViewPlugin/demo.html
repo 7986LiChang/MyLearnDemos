@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Treeview Plugin Demo</title>
+	<link rel="stylesheet" href="./css/js-treeview-plugin.css">
+	<style type="text/css">
+		.container {
+			width: 100%;
+			height: 100%;
+			text-align: center;
+		}
+		.treeviewCont {
+			width: 300px;
+			height: 300px;
+			margin: 0 auto;
+			margin-top: 100px;
+		}
+		
+	</style>
+</head>
+<body>
+	<h1>Treeview Plugin Demo</h1>
+	<div class="container">
+		<div class="treeviewCont"></div>
+	</div>
+	<script src="./js/jquery-1.11.3.js"></script>
+	<script src="./js/js-treeview-plugin.js"></script>
+	<script>
+		$(function() {
+			var tree = $('.treeviewCont');
+            var data = [
+                {
+                    name: '一级菜单1',
+                    id: 'id_01'
+                },
+                {
+                    name: '一级菜单2',
+                    id: 'id_02'
+                },
+                {
+                    name: '一级菜单3',
+                    id: 'id_03'
+                },
+                {
+                    name: '一级菜单4',
+                    id: 'id_04'
+                },
+                {
+                    pId: 'id_01',
+                    name: '二级菜单1001',
+                    id: 'id_01_001'
+                },
+                {
+                    pId: 'id_01',
+                    name: '二级菜单102',
+                    id: 'id_01_02'
+                },
+                {
+                    pId: 'id_03',
+                    name: '二级菜单3001',
+                    id: 'id_03_001'
+                },
+                {
+                    pId: 'id_04',
+                    name: '二级菜单4001',
+                    id: 'id_04_001'
+                },
+                {
+                    pId: 'id_01',
+                    name: '二级菜单1002',
+                    id: 'id_01_002'
+                },
+                {
+                    pId: 'id_03',
+                    name: '二级菜单3002',
+                    id: 'id_03_002'
+                },
+                {
+                    pId: 'id_04',
+                    name: '二级菜单4002',
+                    id: 'id_04_002'
+                },
+                {
+                    pId: 'id_01_02',
+                    name: '三级菜单12001',
+                    id: 'id_01_02_001'
+                }
+            ];
+			treeViewPlugin.initModule(tree);
+            treeViewPlugin.setData(data);
+			
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_22_1 绘制一个七巧板</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa; display: block; margin: 50px auto;">
+		当前浏览器不支持canvas，更换浏览器
+	</canvas>
+
+	<script type="text/javascript">
+
+		// define the tangram , 数组对象，7块
+		var tangram = [
+			{ p : [ { x : 0 , y : 0 } , { x : 800 , y : 0 } , { x : 400 , y : 400 }],
+			  color : "#caff67"},     //定义每块的坐标、颜色
+			{ p : [ { x : 0 , y : 0 } , { x : 400 , y : 400 } , { x : 0 , y : 800 }],
+			  color : "#67beef"},     
+			{ p : [ { x : 800 , y : 0 } , { x : 800 , y : 400 } , { x : 600 , y : 600 } , { x : 600 , y : 200 } ],
+			  color : "#df3d61"},     
+			{ p : [ { x : 600 , y : 200 } , { x : 600 , y : 600 } , { x : 400 , y : 400 }],
+			  color : "#f9f51a"},     
+			{ p : [ { x : 400 , y : 400 } , { x : 600 , y : 600 } , { x : 400 , y : 800 } , { x : 200 , y : 600 } ],
+			  color : "#a594c0"},     
+			{ p : [ { x : 200 , y : 600 } , { x : 400 , y : 800 } , { x : 0 , y : 800 }],
+			  color : "#fa8eee"},     
+			{ p : [ { x : 800 , y : 400 } , { x : 800 , y : 800 } , { x : 400 , y : 800 }],
+			  color : "#f6ca29"}
+		];
+			var canvas = document.getElementById("canvas");
+			var context = canvas.getContext("2d");
+
+		window.onload = function(){
+
+			canvas.width = 800;
+			canvas.height = 800; 
+
+			drawTangram( context );
+			// mousemove - event
+			canvas.addEventListener( "mousemove" , detect );
+		};
+
+		// mousemove function detect 
+		function detect( event ){
+			// get mouseX\mouseY relative to canvas
+			// mouseX - event.clientX  mouseY - event.clientY
+			var x = event.clientX - canvas.getBoundingClientRect().left;
+			var y = event.clientY - canvas.getBoundingClientRect().top;
+			// draw new
+			drawTangram( context , x , y );
+		}
+
+		// draw tangram
+		function drawTangram( cxt , x , y ){
+
+			for( var i = 0 ; i < tangram.length ; i++ ){
+				cxt.beginPath();
+				cxt.moveTo( tangram[i].p[0].x , tangram[i].p[0].y );
+				drawPiece( cxt , tangram[i].p );
+				cxt.closePath();
+
+				if( cxt.isPointInPath( x , y ) ){
+					cxt.fillStyle = "#847F7F";
+					// movePiece( cxt , tangram[i].p );
+				}
+				else{
+					cxt.fillStyle = tangram[i].color;
+				}
+				cxt.lineWidth = 3;
+				cxt.strokeStyle ="black";
+				
+				cxt.fill();
+				cxt.stroke();
+			}
+		}
+
+		// function movePiece( cxt , p ){
+		// 	for( var i = 1 ; i < p.length ; i++ ){
+		// 		p[i].x -= 100;
+		// 		p[i].y -= 100;
+		// 	}
+		// 	drawPiece( cxt , tangram[i].p )
+
+		// }
+
+		function drawPiece( cxt , p ){
+			for( var i = 1 ; i < p.length ; i++ ){
+				cxt.lineTo( p[i].x , p[i].y );
+			}
+		}
+	</script>
+</body>
+</html>

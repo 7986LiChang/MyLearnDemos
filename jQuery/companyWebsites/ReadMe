@@ -1,0 +1,10 @@
+主要使用html、css、js以及少量jQuery知识，制作常见的企业官网。掌握以下点：
+1-- js插件：myFocus的使用。
+2-- css布局：三栏式布局，导航条，垂直居中、水平居中
+css中属性：
+  overflow：hidden;   将div中溢出的部分隐藏
+  vertival-align:middle;   在img下设置，可以使图片与文字居中
+要记住的常识：
+  换行符- <br/>
+  尖括号> - &gt  使用转义
+       <  -&lt   

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>简单的计算器功能</title>
+
+</head>
+<body>
+	<p>实现简单计算器</p>
+	<input type="text" id="txt1" />
+	<select name="select" id="select">
+		<option value="+" selected="true">+</option>
+		<option value="-">-</option>
+		<option value="*">*</option>
+		<option value="/">/</option>
+	</select>
+	<input type="text" id="txt2" />
+	<input type="button" value="=" id="btn" onclick="count()" />
+	<input type="text" id="result"/>
+
+<script type="text/javascript">
+	// 定义count()运算函数
+function count(){
+	//获取第一个输入框的值,输入值为字符串，转换为Int
+	var txt1=parseInt(document.getElementById("txt1").value);
+	
+	// 获取第二个输入框的值
+	var txt2=parseInt(document.getElementById("txt2").value);
+	
+	// 获取选择框的值,即运算符号
+	var operation,result;
+	var select=document.getElementById("select");
+	for(var i=0;i<select.options.length;i++){
+		if(select.options[i].selected){
+			operation=select.options[i].value;
+		}
+	}
+	
+	//通过获取的操作符号定义运算的规则
+	switch(operation){
+		case "+":
+		result=txt1+txt2;
+		break;
+		case "-":
+		result=txt1-txt2;
+		break;
+		case "*":
+		result=txt1*txt2;
+		break;
+		case "/":
+		result=txt1/txt2;
+		break;
+		default:
+		alert("请选择运算操作");
+	}
+
+	//设置结果输入框的值
+	document.getElementById("result").value=result;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_23_模拟动画小球弹跳</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa; display: block; margin: 50px auto;">
+		当前浏览器不支持canvas，更换浏览器
+	</canvas>
+
+	<script type="text/javascript">
+
+		var ball = {
+						x : 800 , 
+						y : 50 , 
+						radius : 20 , 
+						g : 2 ,
+/*						vx : ( Math.random() * 5 + 5 ) * Math.pow( -1 , Math.floor( Math.random() * 100 ) ) , 
+						vy : ( Math.random() * 5 + 5 ) * Math.pow( -1 , Math.floor( Math.random() * 100 ) ) , 
+*/						
+						vx : -4 ,
+						vy : 0 ,
+						color : "#058"
+		};
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+			canvas.width = 1024;
+			canvas.height = 768;
+			var context = canvas.getContext("2d");
+
+			setInterval(function(){
+						render( context );
+						update( canvas.width , canvas.height );
+			}, 50);
+		};
+
+		function render( cxt ){
+			// 渲染前  先清空
+			cxt.clearRect( 0 , 0 , cxt.canvas.width , cxt.canvas.height );
+
+			cxt.beginPath();
+			cxt.arc( ball.x , ball.y , ball.radius , 0 , 2 * Math.PI );
+
+			cxt.fillStyle = ball.color;
+			cxt.fill();
+		}
+
+		function update( canvasWidth , canvasHeight ){
+			// 更新坐标数据
+			ball.x += ball.vx;
+			ball.y += ball.vy;
+			ball.vy += ball.g;
+			// 边界判断
+			// 触碰下边界，速度反向，更新坐标 , 磨损系数
+			if( ball.y + ball.radius >= canvasHeight ){
+				ball.vy = -ball.vy * 0.6;
+				ball.y = canvasHeight - ball.radius;
+			}
+			if( ball.y - ball.radius <= 0){
+				ball.vy = -ball.vy ;
+				ball.y = ball.radius;
+			}
+			if( ball.x + ball.radius >= canvasWidth ){
+				ball.vx = -ball.vx;
+				ball.x = canvasWidth - ball.radius;
+			}
+			if( ball.x - ball.radius <= 0){
+				ball.vx = -ball.vx;
+				ball.x = ball.radius;
+			}
+
+		}
+	</script>
+
+</body>
+</html>

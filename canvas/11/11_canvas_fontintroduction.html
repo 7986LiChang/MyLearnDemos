@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_11_使用文字</title>
+</head>
+<body>
+	<canvas id="canvas" style="border: 1px solid #aaa;display: block;margin: 30px auto;"></canvas>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+			canvas.width = 800;
+			canvas.height = 800;
+			var context = canvas.getContext("2d");
+
+			context.font = "bold 40px Arial";
+			context.fillStyle = "#058";
+			context.textAlign = "left";
+			context.textBaseline = "top";
+			context.fillText( "没结果的话，未完成的牵挂，我们学会许多说法" , 400 , 100 , 600 );
+			drawBaseline( context , 100 );
+
+			context.lineWidth = 1;
+			context.strokeStyle = "#058";
+			context.textAlign = "right";
+			context.textBaseline = "middle";
+			context.strokeText( "没结果的话，未完成的牵挂，我们学会许多说法" , 400 , 200 , 600 );
+			drawBaseline( context , 200 );
+
+			// 使用线性渐变，填充样式，设置文字
+			var linearGradient = context.createLinearGradient( 0 , 0 , 800 , 0 );
+			linearGradient.addColorStop( 0.0 , "red" );
+			linearGradient.addColorStop( 0.25 , "orange" );
+			linearGradient.addColorStop( 0.5 , "yellow" );
+			linearGradient.addColorStop( 0.75 , "green" );
+			linearGradient.addColorStop( 1.0 , "purple" );
+			context.fillStyle = linearGradient;
+			context.textAlign = "center";
+			context.textBaseline = "bottom";
+			context.fillText( "没结果的话，未完成的牵挂，我们学会许多说法" , 400 , 300 , 600 );
+			drawBaseline( context , 300 );
+
+			// 使用图片填充样式，设置文字
+			var backgroundImage = new Image();
+			backgroundImage.src = "1.png";
+			backgroundImage.onload = function(){
+				var pattern = context.createPattern( backgroundImage , "repeat" );
+				context.fillStyle = pattern;
+				context.font = "bold 80px Arial";
+				context.lineWidth = 3;
+				context.strokeStyle = "#151414";
+				context.fillText( "HAPPY NEW MAKE!" , 400 , 400 , 600 );
+				context.strokeText( "HAPPY NEW MAKE!" , 400 , 400 , 600 );				
+			}
+
+
+			context.fillText( "CANVAS" , canvas.width / 2 , canvas.height / 2);
+
+			context.moveTo( 400 , 0 );
+			context.lineTo( 400 , 800 );
+			context.stroke();
+
+		}
+
+		function drawBaseline( cxt , h ){
+
+			cxt.lineWidth = 2;
+			cxt.strokeStyle = "#aaa";
+			cxt.moveTo( 0 , h );
+			cxt.lineTo( cxt.canvas.width , h );
+
+			cxt.stroke();
+		}
+	</script>
+</body>
+</html>

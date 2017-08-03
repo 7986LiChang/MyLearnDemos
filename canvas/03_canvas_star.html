@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_03绘制星</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #ccc;display: block;margin:50px auto;"></canvas>
+
+	<script type="text/javascript">
+
+		window.onload = function(){
+			/*获取画布绘制*/
+			var canvas = document.getElementById("canvas");
+			var context = canvas.getContext("2d");
+
+			canvas.width = 800;
+			canvas.height = 800;
+
+			context.lineJoin = "round";
+			drawStar( context , 80 , 300 ,400 , 400 , 0 , 10 , "red" , "yellow" );
+		}
+
+		/*画一个星星*/
+		/* 1 内切圆r , 外接圆R , 利用中心坐标系下角度(cosβ*R,sinβ*r) , 星星旋转角度rot */
+		function drawStar( cxt, r , R , x , y , rot , borderWidth , borderColor , fillColor ){
+			/*绘制五角星路径，指定点坐标*/
+			cxt.beginPath();
+			for( var i = 0; i < 5 ; i++ ){
+				cxt.lineTo( Math.cos( (18 + 72*i - rot )/180 * Math.PI ) * R + x , - Math.sin( (18 + 72*i - rot )/180 * Math.PI ) * R + y );
+				cxt.lineTo( Math.cos( (54 + 72*i - rot )/180 * Math.PI ) * r + x , - Math.sin( (54 + 72*i - rot )/180 * Math.PI ) * r + y );	
+			}
+			cxt.closePath();
+
+			/*状态设置 */
+			cxt.lineWidth = borderWidth;
+			cxt.fillStyle = fillColor;
+			cxt.strokeStyle = borderColor;
+
+			/*绘制，先填充再描边 */
+			cxt.fill();
+			cxt.stroke();
+		}
+	</script>
+
+</body>
+</html>

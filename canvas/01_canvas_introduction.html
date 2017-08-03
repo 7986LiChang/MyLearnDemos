@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas01</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa;display: block;margin:50px auto;"></canvas>
+
+	<script type="text/javascript">
+	// onload:页面加载完后调用函数
+	window.onload = function(){
+		var canvas = document.getElementById("canvas");
+		canvas.width = 800;
+		canvas.height = 800;
+
+		var context = canvas.getContext("2d");
+		// 使用canvas进行绘制，使用context上下文环境提供的操作,是基于状态的绘制
+		/*状态设置*/
+		/* 1  beginPath 开始全新的路径*/
+		/* 2  moveTo 开始新的坐标点*/
+		/* 3  lineTo 划线*/
+		/*绘制*/
+		/* 1  stroke 绘制*/
+
+		context.lineWidth = 10;
+
+		context.beginPath();
+		context.moveTo( 100, 200);
+		context.lineTo( 300, 400);
+		context.lineTo( 100, 600);
+		context.strokeStyle = "red";
+		context.stroke()
+		
+		context.beginPath();
+		context.moveTo( 300, 200);
+		context.lineTo( 500, 400);
+		context.lineTo( 300, 600);
+		context.strokeStyle = "green";
+		context.stroke();
+
+		context.beginPath();
+		context.moveTo( 500, 200);
+		context.lineTo( 700, 400);
+		context.lineTo( 500, 600);
+		context.strokeStyle = "blue";
+		context.stroke();
+	
+	}
+	
+	</script>
+</body>
+</html>

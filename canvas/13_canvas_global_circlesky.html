@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_13_使用global属性画很多圆</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa;display: block;margin:50px auto;"></canvas>
+	
+	<script type="text/javascript">
+
+		window.onload = function(){
+
+			var canvas = document.getElementById("canvas");
+			canvas.width = 1200;
+			canvas.height = 800;
+			var context = canvas.getContext("2d");
+
+			// 设置全局透明度
+			context.globalAlpha = 0.8;
+			/*在画布上随机画100  不同颜色 不同大小  的圆*/
+			for( var i = 0 ; i < 150 ; i++ ){
+				// 随机生成颜色值，0-255
+				var R = Math.floor( Math.random() * 255 );  
+				var G = Math.floor( Math.random() * 255 );
+				var B = Math.floor( Math.random() * 255 );
+
+				context.fillStyle = "rgb( "+R+" , "+G+" , "+B+" )";
+				context.beginPath();
+				context.arc( Math.random() * canvas.width , Math.random() * canvas.height , Math.random() * 50 , 0 , 2.0 * Math.PI );
+				context.fill();
+			}
+			
+
+		}
+	</script>
+	
+</body>
+</html>

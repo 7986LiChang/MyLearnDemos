@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_10使用曲线绘制弯月</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa; display: block; margin: auto;"></canvas>
+
+	<script type="text/javascript">
+
+	window.onload = function(){
+		var canvas = document.getElementById("canvas");
+		canvas.width = 800;
+		canvas.height = 800;
+		var context = canvas.getContext("2d");
+
+		fillMoon( context , 1.5 , 400 , 400 , 300 , 40 );
+
+		// /*使用arc()、arcTo()绘制月亮*/
+		// // 第一条弧段路径
+		// context.arc( 400 , 400 , 300 , 0.5 * Math.PI , 1.5 * Math.PI , true );
+		// // 第二条弧段路径
+		// context.moveTo( 400 , 100 );
+		// context.arcTo( 1200 , 400 , 400 , 700 , (400 - 100) * dis( 400 , 100 , 1200 , 400 ) / ( 1200 - 400 ) );
+
+		// // 绘制
+		// context.fillStyle = "#FCF62A";
+		// context.fill();
+		// context.stroke();		
+
+	}
+
+	/*绘制带有填充色的月亮*/
+	function fillMoon( cxt , d , x , y , R , rot , /*optional*/fillColor ){
+		cxt.save();
+
+		// 图形变换：移动坐标系、放缩、旋转
+		cxt.translate( x , y );  
+		cxt.scale( R , R );
+		cxt.rotate( rot/180 * Math.PI);
+
+		// 绘制标准月亮，参考点（d,0）要指定
+		pathMoon( cxt , d );
+
+		cxt.fillStyle = fillColor || "#fb5";
+		cxt.fill();
+
+		cxt.restore();
+	}
+
+	/*绘制月亮路径,以（0,0）为坐标系，半径为1，的标准月亮路径*/
+	function pathMoon( cxt , d ){
+		cxt.beginPath();
+
+		cxt.arc( 0 , 0 , 1 , 0.5 * Math.PI , 1.5 * Math.PI , true );
+		cxt.moveTo( 0 , -1 );
+		// 使用arcTo()绘制弧段
+		// cxt.arcTo( d , 0 , 0 , 1 , dis( 0 , -1 , d , 0 ) / d );
+		// 使用贝塞尔曲线quadraticCurveTo()
+		cxt.quadraticCurveTo( 1.3 , 0 , 0 , 1);
+
+		cxt.closePath();
+	}
+
+	/*两点间距离函数*/
+	function dis( x1 , y1 , x2 , y2 ){
+		return Math.sqrt( ( x1 - x2 ) * ( x1 - x2 ) + ( y1 - y2 ) * ( y1 - y2) );
+	}
+	</script>
+</body>
+</html>

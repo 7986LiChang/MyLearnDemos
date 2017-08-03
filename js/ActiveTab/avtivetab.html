@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>js实现选项卡切换</title>
+	<link rel="stylesheet" type= "text/css" href="css/style.css" />
+</head>
+<body>
+<div class="tabs">
+	<ul id="tab-title">
+		<li class="active">房产</li>
+		<li>家居</li>
+		<li>二手房</li>
+		<li>灯饰</li>
+	</ul>
+	<div class="clear"></div>
+	<div id="content">
+		<div>
+		275万购昌平邻铁三居 总价20万买一居</br>
+	    200万内购五环三居 140万安家东三环</br>
+	    北京首现零首付楼盘 53万购东5环50平</br>
+	    京楼盘直降5000 中信府 公园楼王现房
+		</div>
+		<div class="hide">
+		 40平出租屋大改造 美少女的混搭小窝</br>
+	     经典清新简欧爱家 90平老房焕发新生</br>
+	     新中式的酷色温情 66平撞色活泼家居</br>
+	     瓷砖就像选好老婆 卫生间烟道的设计
+		</div>
+		<div class="hide">
+		 通州豪华3居260万 二环稀缺2居250w甩</br>
+	     西3环通透2居290万 130万2居限量抢购</br>
+	     黄城根小学学区仅260万 121平70万抛!</br>
+	     独家别墅280万 苏州桥2居优惠价248万
+		</div>
+		<div class="hide">
+			居家灯饰</br>
+			可爱萌宠</br>
+			清新田园</br>
+			欧美简约
+		</div>
+	</div>
+</div>
+	
+</body>
+<script type="text/javascript">
+	var objul=document.getElementById("tab-title");
+	// 获取列表元素，即选项卡标题.
+	var objli=objul.getElementsByTagName("li");
+	var objcontent=document.getElementById("content");
+	// 获取div元素，即选项卡内容
+	var objdiv=objcontent.getElementsByTagName("div");
+
+	// 遍历列表元素，为每个li添加onmouseover事件，鼠标滑过时，
+	// 1.li样式设为active;
+	// 2.避免闭包添加index属性，在li与div间匹配
+	// 3.显示相应div,样式设为show
+
+	// li数组
+	for(var i=0;i<objli.length;i++){
+		// 定义index属性对li进行编号
+		objli[i].index=i;
+		// 为列表元素添加onmouseover事件
+		objli[i].onmouseover=function(){
+			// 鼠标移动时，先清除所有样式，再对当前li添加样式
+			for(var n=0;n<objli.length;n++){
+				objli[n].className="";
+				objdiv[n].className="hide";			
+			}
+			this.className="active";
+			objdiv[this.index].className="show";
+		};
+	}
+</script>
+</html>
+	

@@ -1,0 +1,79 @@
+/* css reset code */
+html, body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, pre, code, address, variable, form, fieldset, blockquote {
+ padding: 0;
+ margin: 0;
+ font-size: 100%;
+ font-weight: normal;
+}
+table { border-collapse: collapse; border-spacing: 0; }
+td, th, caption { font-weight: normal; text-align: left; }
+img, fieldset { border: 0; }
+ol { padding-left: 1.4em; list-style: decimal; }
+ul { padding-left: 1.4em; list-style:square; }
+q:before, q:after { content:''; }
+
+ul{
+	list-style: none;
+	margin-left: 5px;
+	display: block;
+	padding: 0;
+}
+a{
+	text-decoration: none;
+}
+
+*{
+	font-size: 12px;
+}
+
+.tabs{
+	margin-left: 20px;
+	margin-top: 20px;
+}
+#tab-title{
+	height: 30px;
+/*	overflow: hidden;*/
+}
+#tab-title li{
+	float: left;
+	text-align: center;
+	width: 60px;
+	line-height: 30px;
+	border:solid 1px #ccc;
+	border-bottom: none;
+	margin-right: 8px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+#tab-title .active{
+	border-top: solid 2px saddlebrown;
+	border-bottom: solid 2px #fff;
+	/*background-color: #D4D3D3;*/
+	font-weight: bold;
+	/*color: white;*/
+}
+
+/*清除li子标签的浮动*/
+.clear{
+	clear: both;
+}
+
+#content div{
+	margin-top: -2px;
+	display: block;
+	border:solid 1px #ccc;
+	border-top:solid 2px saddlebrown;
+	width: 260px;
+	line-height: 25px;
+	padding: 10px;
+
+}
+
+.show{
+	display: block;
+}
+#content .hide{
+	display: none;
+}
+

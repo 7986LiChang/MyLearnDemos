@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_06使用transform变换矩阵</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa;display: block;margin:30px auto;"></canvas>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+			canvas.width = 800;
+			canvas.height = 800;
+			var context = canvas.getContext("2d");
+
+			context.fillStyle = "red";
+			context.strokeStyle = "#058";
+			// context.lineWidth = 5;
+
+			// ////////////////
+			// transform( a, b, c, d, e, f )
+			// a c e
+			// b d f
+			// 0 0 1
+			// ///////////////
+			// e,f  水平、垂直位移
+			// a,d  水平、垂直缩放
+			// b,c  水平、垂直倾斜
+			// ///////////////
+
+			context.save();
+			// context.transform( 1, 0 , 0 , 1 , 50 , 50 );
+			context.transform( 1.5, 0 , 0 , 1.5 , 0 , 0 );
+			// context.setTransform( 0.5, 0.5, 0.5 , 0.5, 50 , 50 );
+
+			context.fillRect( 0 , 0 , 200, 200 );
+			context.strokeRect( 0 , 0 , 200 , 200 );
+			context.restore();
+
+		}
+	</script>
+	
+</body>
+</html>

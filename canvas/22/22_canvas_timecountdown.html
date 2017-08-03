@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_22_绚丽的倒计时动画效果</title>
+	<style>
+		#canvas-wrapper{
+			width: 1024px;
+			height: 768px;
+			position: relative;
+			margin: 50px auto;
+		}
+		#start-btn{
+			position: absolute;
+			width:150px;
+			height: 40px;
+			top: 10px;
+			left: 20px;
+			background-color: rgba( 0 , 85 , 116 , 0.7 );
+			border-radius: 8px;
+			color: white;
+			font-family: Microsoft Yahei;
+			font-size: 30px;
+			padding: 20px 30px;
+			font-weight: bold;
+			text-align: center;
+			text-decoration: none;
+		}
+		#start-btn:hover{
+			background-color: rgba( 0 , 85 , 116 , 0.8 );
+		}
+	</style>
+
+</head>
+<body>
+
+	<div id="canvas-wrapper">
+		<canvas id="canvas" style="border:1px solid #aaa; display: block; margin: 50px auto;">
+		当前浏览器不支持canvas，更换浏览器
+		</canvas>
+
+		<div>
+			<a href="#" id="start-btn">跨年倒计时</a>
+		</div>
+	</div>
+	
+
+	<script src="digit.js"></script>
+<!-- 	<script src="timecountdown.js"></script>
+ -->	<script src="timecountdown.js"></script>
+
+</body>
+</html>

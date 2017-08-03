@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_09_»æÖÆÔ²½Ç¾ØÐÎ_2048±ß¿ò</title>
+</head>
+<body>
+
+	<canvas id="canvas" style="border:1px solid #aaa;display: block;margin:30px auto;"></canvas>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+			canvas.width = 800;
+			canvas.height = 800;
+			var context = canvas.getContext("2d");
+
+			// drawRoundRect( context , 100 , 100 , 600 , 500 , 100 );
+			fillRoundRect( context , 150 , 150 , 500 , 500 , 10 , "#bbada0");
+			for( var i = 0 ; i < 4 ; i++ ){
+				for ( var j = 0 ; j < 4 ; j++ ){
+					fillRoundRect( context , 170 + i * 120 , 170 + j * 120 , 100 , 100 , 6 , "#ccc0b3" );
+				}
+			}
+
+		}
+
+		/*»æÖÆÔ²½Ç¾ØÐÎ*/
+		function drawRoundRect( cxt , x , y , width , height , radius ){
+
+			cxt.save();
+
+			cxt.translate( x , y );    //Æ«ÒÆx¡¢y,¹éÕý×ø±êÏµ
+			pathRoundRect( cxt , width , height , radius );
+			cxt.fillStyle = "yellow";
+			cxt.fill();
+
+			cxt.restore();
+		} 
+
+		/*»æÖÆÌî³äÔ²½Ç¾ØÐÎ*/
+		function fillRoundRect( cxt , x , y , width , height , radius , /*optional*/fillColor ){
+
+			/*¿í¶È°²È«ÅÐ¶Ï*/
+			if( 2 * radius > width || 2 * radius > height ){
+				return ;
+			}
+
+			cxt.save();
+
+			cxt.translate( x , y );    //Æ«ÒÆx¡¢y,¹éÕý×ø±êÏµ
+			pathRoundRect( cxt , width , height , radius );
+			cxt.fillStyle = fillColor || "black";
+			cxt.fill();
+
+			cxt.restore();
+		} 
+
+		/*»æÖÆ±ß¿òÔ²½Ç¾ØÐÎ*/
+		function strokeRoundRect( cxt , x , y , width , height , radius , /*optional*/lineWidth , /*optional*/strokeColor ){
+
+			/*¿í¶È°²È«ÅÐ¶Ï*/
+			if( 2 * radius > width || 2 * radius > height ){
+				return ;
+			}
+
+			cxt.save();
+
+			cxt.translate( x , y );    //Æ«ÒÆx¡¢y,¹éÕý×ø±êÏµ
+			pathRoundRect( cxt , width , height , radius );
+			cxt.lineWidth = lineWidth || 1;
+			cxt.strokeStyle = strokeColor || "black";
+			cxt.stroke();
+
+			cxt.restore();
+		} 
+
+
+		/*»æÖÆÔ²½Ç¾ØÐÎÂ·¾¶±ß¿ò*/
+		function pathRoundRect( cxt , width , height , radius ){
+
+			cxt.beginPath();
+
+			cxt.arc( width - radius , height - radius , radius , 0 , Math.PI / 2 );
+			cxt.lineTo( radius , height );
+			cxt.arc( radius , height - radius , radius , Math.PI/2 , Math.PI );
+			cxt.lineTo( 0 , radius );
+			cxt.arc( radius , radius , radius , Math.PI , Math.PI * 1.5 );
+			cxt.lineTo( width - radius , 0 );
+			cxt.arc( width-radius , radius , radius , Math.PI * 1.5 , Math.PI * 2 );
+
+			cxt.closePath();
+		}
+	</script>
+	
+</body>
+</html>

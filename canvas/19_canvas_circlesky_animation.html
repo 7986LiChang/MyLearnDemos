@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_19_canvas中使用HTML元素，绘制一片运动的小球</title>
+
+	<style>
+		#canvas-wrapper{
+			width:1200px;
+			height: 800px;
+			position: relative;
+			margin: 30px auto;
+		}
+
+		#canvas{
+			border: 1px solid #aaa;
+		}
+
+		#controller{
+			position: absolute;
+			top: 30px;
+			left: 30px;
+			background-color: rgba( 0 , 85 , 116 , 0.7 );
+			padding: 5px 20px 25px 20px;
+			border-radius: 10px;
+		}
+
+		#controller h1{
+			color:white;
+			font-weight: bold;
+			font-family: Microsoft Yahei;
+		}
+
+		#controller #canvas-btn{
+			background-color: #8b0;
+			color: white;
+			font-size: 14px;
+			padding: 5px 15px;
+			border-radius: 6px;
+			text-decoration: none;
+			margin-top: 10px;
+			margin-right: 20px;
+		}
+
+		#controller #canvas-btn:hover{
+			background-color: #7E9D35;
+		}
+
+		#controller .color-btn{
+			text-decoration: none;
+			font-size: 14px;
+			padding: 5px 10px;
+			margin-top: 10px;
+			margin-right: 5px;
+			border-radius: 6px;
+		}
+
+		#controller #white-color-btn{
+			background-color: white;
+		}
+
+		#controller #black-color-btn{
+			background-color: black;
+		}
+	</style>
+</head>
+<body>
+	<div id="canvas-wrapper">
+		<canvas id="canvas">
+			当前浏览器不支持canvas，请更换浏览器后重试
+		</canvas>
+		
+		<div id="controller">
+			<h1>运动的彩色泡泡</h1>
+			<a href="#" id="canvas-btn">停止</a>
+			<a href="#" class="color-btn" id="white-color-btn">&nbsp;</a>
+			<a href="#" class="color-btn" id="black-color-btn">&nbsp;</a>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+
+		var balls = [];
+
+		var isMoving = true;
+		var themeColor = "white";
+
+		var canvas = document.getElementById("canvas");
+		var  context = canvas.getContext("2d");
+		
+		window.onload = function(){
+
+			canvas.width = 1200;
+			canvas.height = 800;
+
+			// 随机100个园，生成balls[]
+			randomCircle( 100 );
+
+			setInterval( function(){
+				
+				draw( );
+				// 希望小球运动时，就更新坐标
+				if( isMoving ){
+					update( canvas.width , canvas.height );    //更新（x,y）					
+				}
+			}, 50);
+
+			// "停止按钮"添加点击事件
+			document.getElementById("canvas-btn").onclick = function( event ){
+				if( isMoving )
+				{
+					isMoving = false;
+					this.text = "开始";
+				}
+				else{
+					isMoving = true;
+					this.text = "停止";
+				}
+				return false; //有返回值
+			};
+
+			document.getElementById("white-color-btn").onclick = function( event ){
+				themeColor = "white";
+				return false;
+			};
+
+			document.getElementById("black-color-btn").onclick = function( event ){
+				themeColor = "black";
+				return false;
+			};
+
+		};
+
+		// draw
+		function draw( ){
+
+			context.clearRect( 0 , 0 , canvas.width , canvas.height );
+
+			if(themeColor == "black" ){
+				console.log( "black theme" );
+				context.fillStyle = "black";
+				context.fillRect( 0 , 0 , canvas.width ,canvas.height );
+			}
+			
+			// 绘制
+			for( var i = 0 ; i < balls.length ; i ++ ){
+
+				context.beginPath();
+				context.arc( balls[i].x , balls[i].y , balls[i].radius , 0 , 2 * Math.PI );
+
+				context.fillStyle = balls[i].color;
+				context.fill();
+			}
+		}
+
+		function randomCircle( num ){
+			// 随机num个圆 
+			for( var i = 0 ; i < num ; i++ ){
+				var r = Math.random() * 50 ;
+				var aBall = { x : Math.random() * ( canvas.width - 2 * r ) + r , 
+							  y : Math.random() * ( canvas.height - 2 * r ) + r ,
+							  radius : r ,
+							  vx : ( Math.random() * 5 + 5 ) * Math.pow( -1 , Math.floor( Math.random() * 100 )),   //Math.pow(x,y),返回x的y次幂  , 随机正负 ，控制初始球的运动方向不同
+							  vy : ( Math.random() * 5 + 5 ) * Math.pow( -1 , Math.floor( Math.random() * 100 )),
+							  color : getColor()
+				};
+				balls[i] = aBall;
+			}
+		}
+
+		function getColor(){
+			var R = Math.floor( Math.random() * 255 );
+			var G = Math.floor( Math.random() * 255 );
+			var B = Math.floor( Math.random() * 255 );
+			return "rgb( "+R+" , "+G+" , "+B+" )";
+		}
+
+		// 移动小球位置，同时计算新的坐标
+		function update( canvasWidth , canvasHeight ){
+
+			for( var i = 0 ; i < balls.length ; i++){
+				
+				balls[i].x += balls[i].vx;
+				balls[i].y += balls[i].vy;
+
+				if( ( balls[i].x - balls[i].radius ) <= 0 ){
+					balls[i].vx = -balls[i].vx;
+					balls[i].x = balls[i].radius;
+				}	
+				if( ( balls[i].x + balls[i].radius ) >= canvasWidth ){
+					balls[i].vx = -balls[i].vx;
+					balls[i].x = canvasWidth - balls[i].radius;
+				}	
+				if( ( balls[i].y - balls[i].radius ) <= 0 ){
+					balls[i].vy = -balls[i].vy;
+					balls[i].y = balls[i].radius;
+				}	
+				if( ( balls[i].y + balls[i].radius ) >= canvasHeight ){
+					balls[i].vy = -balls[i].vy;
+					balls[i].y = canvasHeight - balls[i].radius;
+				}		
+			}
+		}
+
+	</script>
+</body>
+</html>

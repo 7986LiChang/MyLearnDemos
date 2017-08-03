@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_20扩展canvas的context,添加画五角星的函数</title>
+</head>
+<body>
+	<canvas id="canvas" style="border: 1px solid #aaa; display: block; margin: 30px auto;">
+		canvas无法加载时的内容，您的浏览器不支持
+	</canvas>
+
+	<script type="text/javascript">
+
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+
+		// context.funciton standardstar
+		CanvasRenderingContext2D.prototype.fillStandardStar = function( x , y , R , rot ){
+			// this 当前对象即为context
+			this.save();
+
+			this.translate( x , y );
+			this.rotate( rot / 180 * Math.PI );
+			this.scale( R , R );
+
+			starPath( this );
+			this.fill();
+			this.restore();
+
+		};
+
+		// context.funciton star
+		CanvasRenderingContext2D.prototype.fillStar = function( x , y , R , r , rot ){
+			this.beginPath();
+			for( var i = 0 ; i <5 ; i++ ){
+				this.lineTo( Math.cos( ( 18 + 72*i - rot )/180 * Math.PI) * R + x  , 
+					-Math.sin( ( 18 + 72*i - rot )/180 * Math.PI ) * R + y );
+				this.lineTo( Math.cos( ( 54 + 72*i - rot )/180 * Math.PI ) * r + x , 
+					-Math.sin( ( 54+72*i)/180 * Math.PI) * r + y );
+			}
+			this.closePath();
+
+			this.fill();
+		};
+
+		//记录原始moveTo
+		var originalMoveTo = CanvasRenderingContext2D.prototype.moveTo;  
+		// 扩充
+		CanvasRenderingContext2D.prototype.lastMoveToLoc = {};
+		// 改写原生moveTo
+		CanvasRenderingContext2D.prototype.myMoveTo = function( x , y ){
+			// 调用原生moveTo函数
+			originalMoveTo.apply( context , [ x , y ] );
+
+			this.lastMoveToLoc.x = x ;
+			this.lastMoveToLoc.y = y ;
+		};
+
+				// context.function only R, r, rot
+		CanvasRenderingContext2D.prototype.fillStarOnlyR = function( R , r , rot ){
+			this.beginPath();
+			for( var i = 0 ; i <5 ; i++ ){
+				this.lineTo( Math.cos( ( 18 + 72*i - rot )/180 * Math.PI) * R + this.lastMoveToLoc.x  , 
+					-Math.sin( ( 18 + 72*i - rot )/180 * Math.PI ) * R + this.lastMoveToLoc.y );
+				this.lineTo( Math.cos( ( 54 + 72*i - rot )/180 * Math.PI ) * r + this.lastMoveToLoc.x , 
+					-Math.sin( ( 54+72*i)/180 * Math.PI) * r + this.lastMoveToLoc.y );
+			}
+			this.closePath();
+
+			this.fill();
+		};
+
+
+		window.onload = function(){
+			canvas.width = 800;
+			canvas.height = 800;
+
+			context.fillStyle = "#058";
+			context.fillStandardStar( 400 , 400 , 300 , 0 );
+
+			context.fillStyle = "#F9F730";
+			context.fillStar( 400 , 400 , 200 , 100 , 0 );
+
+
+			context.myMoveTo( 400 , 400 );
+			context.fillStyle = "#F60E0E";
+			context.fillStarOnlyR( 100 , 50 , 0 );
+		};
+
+		function starPath( cxt ){
+			cxt.beginPath();
+			for( var i = 0; i < 5; i++ ){
+				cxt.lineTo( Math.cos( (18 + 72*i)/180 * Math.PI ) , 
+					-Math.sin( ( 18+72*i)/180 * Math.PI) );
+				cxt.lineTo( Math.cos( (54 + 72*i)/180 * Math.PI ) * 0.5, 
+					-Math.sin( ( 54+72*i)/180 * Math.PI) * 0.5 );	
+			}
+			cxt.closePath();
+		}
+
+	</script>
+</body>
+</html>

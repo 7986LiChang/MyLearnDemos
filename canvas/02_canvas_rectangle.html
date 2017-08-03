@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas02_绘制矩形函数</title>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	
+	<script type="text/javascript">
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+			var context = canvas.getContext("2d");
+			/*使用context进行绘制*/
+			canvas.width = 800;
+			canvas.height = 800;
+
+			drawRect( context , 100 , 100 , 300 , 300 , 10 , "red" , "yellow" );
+			drawRect2(context , 250 , 250 , 300 , 300 , 10 , "red" , "blue" )
+
+		}
+
+
+		/*beginPath() closePath() 成对使用*/
+		/*先填充 再描边*/
+		function drawRect( cxt , x , y , width , height , borderWidth , borderColor , fillColor ){
+			cxt.beginPath();
+			cxt.moveTo( x , y );
+			cxt.lineTo( x+width , y );
+			cxt.lineTo( x+width , y+height );
+			cxt.lineTo( x , y+height );
+			cxt.closePath();
+
+			
+			cxt.fillStyle = fillColor;
+			cxt.lineWidth = borderWidth;
+			cxt.strokeStyle = borderColor;
+
+			cxt.fill();
+			cxt.stroke();
+		}
+
+		function drawRect2( cxt , x , y , width , height , borderWidth , borderColor , fillColor ){
+
+			cxt.fillStyle = fillColor;
+			cxt.lineWidth = borderWidth;
+			cxt.strokeStyle = borderColor;
+			/*使用fillStyle的属性绘制一次*/
+			cxt.fillRect( x , y , width , height );
+			/*使用strokeStyle的属性再绘制一次*/
+			cxt.strokeRect( x , y , width , height );
+
+		}
+	</script>
+</body>
+</html>

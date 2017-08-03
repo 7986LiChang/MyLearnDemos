@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>制作表格显示班级学生信息</title>
+</head>
+<body>
+<table id="table" border="1" width="50%">
+	<tr>
+		<th>学号</th>
+		<th>姓名</th>
+	    <th>操作</th>
+	</tr>
+	<tr>
+		<td>xh001</td>
+		<td>王小明</td>
+		<td><a href="javascript:;" onclick="del(this);">删除</a></td>  <!-- 在删除链接上添加点击函数 -->
+	</tr>
+
+	<tr>
+		<td>xh002</td>
+		<td>刘小芳</td>
+		<td><a href="javascript:;" onclick="del(this);">删除</a></td>  <!-- 在删除链接上添加点击函数 -->
+	</tr>
+
+	<!-- <tr>
+		<td>xh003</td>
+		<td>马小跳</td>
+		<td><a href="javascript:remove(this)">删除</a></td>  
+		<!-- 在删除链接上添加点击函数 -->
+	</tr>
+</table>
+<input type="button" id="btn" value="添加一行" onclick="add()"/>
+	
+	<script type="text/javascript">
+	//onload声明页面只要加载就调用的函数
+		window.onload=function(){
+			// 移动鼠标改变行背景色,给每行添加onmouseover事件，以及onmouseout事件
+			var trs=document.getElementsByTagName('tr');
+
+			for(var i=0;i<trs.length;i++){
+				// 为鼠标滑动事件绑定函数
+				bgcChange(trs[i]);
+			}
+		};
+
+		// 定义鼠标滑动背景色更改函数
+		function bgcChange(obj){
+			obj.onmouseover=function(){
+					obj.style.backgroundColor="#f2f2f2";
+				};
+			obj.onmouseout=function(){
+					obj.style.backgroundColor="#fff";
+				};
+		}
+
+		// 按钮函数，动态在表格的最后一行添加子节点，提供输入
+		function add(){
+			var text1=prompt("请输入学生序号:",'');
+			var text2=prompt("请输入学生姓名",'');
+			var table=document.getElementById("table");
+			//新建行
+			var newtr=document.createElement("tr");
+			//新建行内子项1
+			var newtd1=document.createElement("td");
+			newtd1.innerHTML=text1;
+			//新建行内子项2
+			var newtd2=document.createElement("td");
+			newtd2.innerHTML=text2;
+			//新建行内子项3，其中是一个超链接a
+			var newtd3=document.createElement("td");
+			// 向单元格内放入超链接，通过innerHTML
+			newtd3.innerHTML="<a href='javascript:;' onclick='del(this)' >删除</a>";
+			// 新建超链接a
+			// var a=document.createElement("a");
+			// a.innerHTML="删除";
+			// a.href='javascript:;';
+			// // a标签的点击绑定事件
+			// a.onclick=function(){
+			// 	del(this);
+			// };
+			// newtd3.appendChild(a);
+			//向行内添加单元格
+			newtr.appendChild(newtd1);
+			newtr.appendChild(newtd2);
+			newtr.appendChild(newtd3);
+			//向表格添加新行
+			table.appendChild(newtr);
+			//新添加的行也要有滑动改变背景颜色
+			var trs=document.getElementsByTagName('tr');
+			for(var i=0;i<trs.length;i++){
+				// 为鼠标滑动事件绑定函数
+				bgcChange(trs[i]);
+			}
+		}
+
+			// 创建删除函数,remove()是html自带的方法，最好不要重名，否则remove(this)删除当前点击元素，也不会进入执行删除函数
+	     function del(obj)
+	     {
+	     	// 向上通过parentNode节点删除，table子节点是tbody和text,tbody子节点才是tr
+	         var tr=obj.parentNode.parentNode;
+	         tr.parentNode.removeChild(tr);
+	     }
+	</script>
+</body>
+</html>

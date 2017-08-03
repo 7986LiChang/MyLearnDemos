@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas08_使用图片、画布或video</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa;display: block;margin:30px auto;"></canvas>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+			var context = canvas.getContext("2d");
+			canvas.width = 800;
+			canvas.height = 800;
+
+			////////////////////
+			// 使用图片填充
+			var backgroundImage = new Image();
+			backgroundImage.src = "1.png";
+
+			/*图片被加载时调用函数*/
+			backgroundImage.onload = function(){
+				// 使用图片填充样式
+				var pattern = context.createPattern( backgroundImage , "repeat" );
+				context.fillStyle = pattern;
+				context.fillRect( 0 , 0 ,800 , 800 );
+			}
+			/////////////////////
+
+
+			// //////////
+			// 使用canvas填充
+		// 	var backCanvas = createBackgroundCanvas();
+		// 	var pattern = context.createPattern( backCanvas , "repeat" );
+		// 	context.fillStyle = pattern;
+		// 	context.fillRect( 0 , 0 , 800 , 800 );
+		// }
+
+		// // 创建一个100 100的画布，上面绘制一个五角星
+		// function createBackgroundCanvas(){
+		// 	var backCanvas = document.createElement("canvas");   //创建一个canvas
+		// 	backCanvas.width = 100;
+		// 	backCanvas.height = 100;
+		// 	var backContext = backCanvas.getContext("2d");
+		// 	// 在新画布上绘制五角星
+		// 	drawStar( backContext , 50 , 50 , 50 , 0 );
+		// 	return backCanvas;
+		// }
+
+		// /*利用放缩，根据标准路径画五角星*/
+		// function drawStar( cxt , x , y , R , rot ){
+		// 	cxt.save();
+		// 	/*绘制在(x,y)，大小为R，旋转rot度的五角星*/
+		// 	cxt.translate( x ,y );
+		// 	cxt.rotate( rot/ 180 * Math.PI );
+		// 	cxt.scale( R , R );
+
+		// 	starPath( cxt );
+
+		// 	/*状态设置 */
+		// 	cxt.fillStyle = "#fb3";
+
+		// 	/*绘制，先填充再描边 */
+		// 	cxt.fill();
+
+		// 	cxt.restore();
+
+		// }
+
+		// /*绘制一个标准五角星路径（正角,R=1,r=0.5(R/2),无偏移）*/
+		// function starPath( cxt ){
+		// 	cxt.beginPath();
+		// 	for( var i = 0; i < 5; i++ ){
+		// 		cxt.lineTo( Math.cos( (18 + 72*i)/180 * Math.PI ) , 
+		// 			-Math.sin( ( 18+72*i)/180 * Math.PI) );
+		// 		cxt.lineTo( Math.cos( (54 + 72*i)/180 * Math.PI ) * 0.5, 
+		// 			-Math.sin( ( 54+72*i)/180 * Math.PI) * 0.5 );	
+		// 	}
+		// 	cxt.closePath();
+		// }
+			// //////////
+
+
+			// /////////
+			// 使用video背景填充
+	</script>
+</body>
+</html>

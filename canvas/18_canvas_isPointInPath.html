@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_18_使用isPointInPath - 点亮圆</title>
+</head>
+<body>
+	<canvas id="canvas" style="border: 1px solid #aaa; display: block; margin: 30px auto; "></canvas>
+
+	<script type="text/javascript">
+
+		// 全局变量，便于存取
+		var balls = [];
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+
+		window.onload = function(){
+
+			canvas.width = 800;
+			canvas.height = 800;
+
+			// 构建balls[],随机生成10个小球
+			for( var i = 0 ; i < 10 ; i++ ){
+				var aBall = { x : Math.random() * canvas.width ,
+							  y : Math.random() * canvas.height , 
+							  radius : Math.random() * 50 + 20     //圆半径在20-70之间
+				};
+				balls[i] = aBall;
+			}
+			// 绘制
+			draw();
+			// 绑定鼠标点击事件，鼠标松下时，执行detect函数
+			// canvas.addEventListener( "mouseup" , detect );
+
+			canvas.addEventListener( "mousemove" , detectmove );
+		};
+
+		// 鼠标移动事件函数
+		function detectmove( event ){
+			// 获取鼠标点相对于canvas的坐标
+			var x = event.clientX - canvas.getBoundingClientRect().left;
+			var y = event.clientY - canvas.getBoundingClientRect().top;
+			// 重绘
+			draw( x , y );
+		}
+
+		// 重绘
+		function draw( x , y ){
+			// clear先清空
+			context.clearRect( 0 , 0 , canvas.width , canvas.height );
+
+			for( var i = 0 ; i < balls.length ; i++ ){
+				context.beginPath();
+				context.arc( balls[i].x , balls[i].y , balls[i].radius , 0 , 2 * Math.PI );
+				// 鼠标移动到圆上，显示为红色
+				if( context.isPointInPath( x , y ))
+					context.fillStyle = "red";
+				// 移出圆，默认蓝色
+				else
+					context.fillStyle = "#058";
+				context.fill();
+			}
+
+		}
+		// 点击事件函数 ,默认传参event,点击圆球变红
+		// function detect( event ){
+
+		// 	// 获取鼠标点击(相对于浏览器有个坐标) 相对于canvas的坐标
+		// 	var x = event.clientX - canvas.getBoundingClientRect().left;
+		// 	var y = event.clientY - canvas.getBoundingClientRect().top;
+
+		// 	// 在每个圆中判断，在圆区域内，判断是否在路径上，则重绘
+		// 	for( var i = 0 ; i < balls.length ; i++){
+		// 		context.beginPath();
+		// 		context.arc( balls[i].x , balls[i].y , balls[i].radius , 0 , 2 * Math.PI );
+		// 		if( context.isPointInPath( x , y ) ){
+		// 			context.fillStyle = "red";
+		// 			context.fill();
+		// 		}
+		// 	}
+		// }
+
+		// 随机绘制
+		// function draw(){
+
+		// 	for( var i = 0 ; i < balls.length ; i++ ){
+		// 		context.beginPath();
+		// 		context.arc( balls[i].x , balls[i].y , balls[i].radius , 0 , 2 * Math.PI );
+
+		// 		// context.fillStyle = getColor();
+		// 		context.fillStyle = "#058";
+		// 		context.fill();
+		// 	}
+		// }
+
+		// 随机一种颜色，字符串
+		function getColor(){
+			var R = Math.floor( Math.random() * 255 );
+			var G = Math.floor( Math.random() * 255 );
+			var B = Math.floor( Math.random() * 255 );
+			var color = "rgb( "+R+" , "+G+" , "+B+" )";
+
+			// return "rgb( "+R+" , "+G+" , "+B+" )";
+			return color;
+		}
+
+	</script>
+</body>
+</html>

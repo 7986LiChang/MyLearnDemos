@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <title>点击按钮删除子节点</title></head>
+
+<body>
+<div id="content">
+  <h1>html</h1>
+  <h1>php</h1>
+  <h1>javascript</h1>
+  <h1>jquery</h1>
+  <h1>java</h1>
+</div>
+
+<script type="text/javascript">
+function clearText() {
+  var content=document.getElementById("content");
+  // 在此完成该函数
+  //一次性清除
+  //有些浏览器中要计入空白节点,其类型为文本节点，nodeType值为1
+  for(var i=0;i<content.childNodes.length;i++){
+      //每移除一个节点，子节点总数都会变化一次
+      if(content.childNodes[i].nodeType!=1){
+          continue;
+      }else{
+      content.removeChild(content.childNodes[i]);
+      }
+  }
+  
+}
+</script>
+
+<button onclick="clearText()">清除节点内容</button>
+
+
+
+</body>
+</html>

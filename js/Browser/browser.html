@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>浏览器中倒数计时</title>
+</head>
+<body>
+	<h3>操作成功</h3>
+	<p><span id="second">5</span>秒后跳转到慕课网主页<a href="javascript:history.back()">返回</a></p>
+
+	<script type="text/javascript">
+	var num=document.getElementById("second").innerHTML;
+	var i;
+	function secondChange(){
+		num--;
+		document.getElementById("second").innerHTML=num;
+		if(num==0){
+		//倒计时0秒时，打开新网页并停止计时
+		window.open("http://www.baidu.com",'_blank','width=400,height=600');
+		clearInterval(i);
+		}
+	}
+	i=setInterval("secondChange()", 1000);
+	// if(num==0){
+
+	// }
+	</script>
+
+</body>
+</html>

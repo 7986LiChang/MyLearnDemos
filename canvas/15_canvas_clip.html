@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas_15_使用剪辑区域clip</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa; display: block; margin:30px auto;"></canvas>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+
+			// 动态设置画布大小，style中设大小容易出问题
+			canvas.width = 800;
+			canvas.height = 800;
+
+			var context = canvas.getContext("2d");
+
+			context.beginPath();
+			context.fillStyle = "black";
+			context.fillRect( 0 , 0 , canvas.width , canvas.height );
+
+			// 绘制路径
+			context.beginPath();
+			context.arc( 400 , 400 , 150 , 0 , 2 * Math.PI);
+			context.fillStyle = "white";
+			context.fill();
+
+			// 剪辑当前路径作为以下绘制背景
+			context.clip(); 
+
+			// 文字在clip区域内绘制
+			context.font = " bold 150px Arial ";
+			context.textAlign = "center";
+			context.textBaseline = "middle";
+			context.fillStyle = "#273DE0";
+			context.fillText( "CANVAS" , canvas.width / 2 , canvas.height / 2 ); 
+	};
+
+
+	</script>
+
+</body>
+</html>

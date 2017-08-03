@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="gb2312">
+	<title>canvas04_画一片星空</title>
+</head>
+<body>
+	<canvas id="canvas" style="border:1px solid #aaa;display: block;margin:30px auto;"></canvas>
+	
+	<script type="text/javascript">
+
+		// context扩充绘制标准五角星的函数 fillStandardStar 
+		CanvasRenderingContext2D.prototype.fillStandardStar = function( x , y , R , rot ){
+			// this 当前对象即为context
+			this.save();
+
+			this.translate( x , y );
+			this.rotate( rot / 180 * Math.PI );
+			this.scale( R , R );
+
+			starPath( this );
+			this.fill();
+			this.restore();
+
+		};
+
+		window.onload = function(){
+			var canvas = document.getElementById("canvas");
+			var context = canvas.getContext("2d");
+
+			canvas.width = 1200;
+			canvas.height = 800;
+
+			/*绘制星空画布*/
+			// context.fillStyle = "black";
+
+			/*使用线性渐变绘制星空画布*/
+			var skyStyle = context.createLinearGradient( 0 , 0 , 0 , canvas.height);   //垂直渐变
+			skyStyle.addColorStop( 0.0 , "black" );
+			skyStyle.addColorStop( 1.0 , "#035" );
+
+			// /*使用径向渐变绘制星空画布*/
+			// var skyStyle = context.createRadialGradient( canvas.width/2 , canvas.height , 0 , canvas.width/2 , canvas.height , canvas.height );
+			// skyStyle.addColorStop( 0.0 , "#035" );
+			// skyStyle.addColorStop( 1.0 , "black" );
+
+			context.fillStyle = skyStyle;
+			context.fillRect( 0 , 0 , canvas.width , canvas.height );
+
+			/*绘制大量五角星,200颗*/
+			for(var i = 0; i < 300; i++ ){
+				var R = Math.random() * 5 + 5;    //大圆半径在10到20之间,标准五角星，内圆半径是外圆半径的一半
+				var x = Math.random() * canvas.width;      //x偏移量在宽内
+				var y = Math.random() * canvas.height * 0.65;     //只在画布上半部绘制星星
+				var rot = Math.random() * 360;
+				drawStar( context , x , y , R, rot );
+
+				// 使用context扩充标准五角星绘制funciton
+				// context.fillStyle = "#fb5";
+				// context.fillStandardStar( x , y , R , rot );
+			}
+
+			fillMoon( context , 2 , 1000 , 150 , 100 , 30 );
+			drawLand( context );
+
+			context.font = "bold 100px Arial";
+			// cntext.fillStyle = "#058";
+			drawText( context, "夜，静悄悄，劳累的人沉沉睡去" , 80 , 650 );
+
+		}
+
+		/*加一句话*/
+		function drawText( cxt , str , x , y , /*optional*/fillColor ){
+			cxt.save();
+			cxt.fillStyle = fillColor || "#E0DEDE";
+			cxt.font = "bold 30px microsoftyahei";
+			cxt.fillText( str , x ,y ); 
+			cxt.restore();
+		}
+
+		/*画一片绿草地*/
+		function drawLand( cxt ){
+			cxt.save();
+
+			// 绘制闭环草地路径
+			cxt.beginPath();
+			cxt.moveTo( 0 , 600 );
+			cxt.bezierCurveTo( 540 , 400 , 660 , 800 , 1200 , 600 );
+			cxt.lineTo( 1200 , 800 );
+			cxt.lineTo( 0 , 800 );
+			cxt.closePath();
+
+			// 状态设置   线性渐变
+			var landStyle = cxt.createLinearGradient( 0 , 800 , 0 , 0 );
+			landStyle.addColorStop( 0.0 , "#030" );
+			landStyle.addColorStop( 1.0 , "#580" );
+			cxt.fillStyle = landStyle;
+			// 绘制
+			cxt.fill();
+
+			cxt.restore();
+
+		}
+
+		/*利用放缩，根据标准路径画五角星*/
+		function drawStar( cxt , x , y , R , rot ){
+			cxt.save();
+			/*绘制在(x,y)，大小为R，旋转rot度的五角星*/
+			cxt.translate( x ,y );
+			cxt.rotate( rot/ 180 * Math.PI );
+			cxt.scale( R , R );
+
+			starPath( cxt );
+
+			/*状态设置 */
+			cxt.fillStyle = "#fb5";
+			/*绘制，先填充再描边 */
+			cxt.fill();
+			// cxt.stroke();
+
+			cxt.restore();
+		}
+
+		/*绘制一个标准五角星路径（正角,R=1,r=0.5(R/2),无偏移）*/
+		function starPath( cxt ){
+			cxt.beginPath();
+			for( var i = 0; i < 5; i++ ){
+				cxt.lineTo( Math.cos( (18 + 72*i)/180 * Math.PI ) , 
+					-Math.sin( ( 18+72*i)/180 * Math.PI) );
+				cxt.lineTo( Math.cos( (54 + 72*i)/180 * Math.PI ) * 0.5, 
+					-Math.sin( ( 54+72*i)/180 * Math.PI) * 0.5 );	
+			}
+			cxt.closePath();
+		}
+
+
+		/*绘制带有填充色的月亮*/
+		function fillMoon( cxt , d , x , y , R , rot , /*optional*/fillColor ){
+			cxt.save();
+
+			// 图形变换：移动坐标系、放缩、旋转
+			cxt.translate( x , y );  
+			cxt.scale( R , R );
+			cxt.rotate( rot/180 * Math.PI);
+
+			// 绘制标准月亮，参考点（d,0）要指定
+			pathMoon( cxt , d );
+
+			cxt.fillStyle = fillColor || "#fb3";
+			cxt.fill();
+
+			cxt.restore();
+		}
+
+		/*绘制月亮路径,以（0,0）为坐标系，半径为1，的标准月亮路径*/
+		function pathMoon( cxt , d ){
+			cxt.beginPath();
+
+			cxt.arc( 0 , 0 , 1 , 0.5 * Math.PI , 1.5 * Math.PI , true );
+			cxt.moveTo( 0 , -1 );
+			cxt.arcTo( d , 0 , 0 , 1 , dis( 0 , -1 , d , 0 ) / d );
+
+			cxt.closePath();
+		}
+
+		/*两点间距离函数*/
+		function dis( x1 , y1 , x2 , y2 ){
+			return Math.sqrt( ( x1 - x2 ) * ( x1 - x2 ) + ( y1 - y2 ) * ( y1 - y2) );
+		}
+
+				// /*画一个星星*/
+		// /* 1 内切圆r , 外接圆R , 利用中心坐标系下角度(cosβ*R,sinβ*r) , 星星旋转角度rot */
+		// function drawStar( cxt, r , R , x , y , rot ){
+		// 	/*绘制五角星路径，指定点坐标*/
+		// 	cxt.beginPath();
+		// 	for( var i = 0; i < 5 ; i++ ){
+		// 		cxt.lineTo( Math.cos( (18 + 72*i - rot )/180 * Math.PI ) * R + x , - Math.sin( (18 + 72*i - rot )/180 * Math.PI ) * R + y );
+		// 		cxt.lineTo( Math.cos( (54 + 72*i - rot )/180 * Math.PI ) * r + x , - Math.sin( (54 + 72*i - rot )/180 * Math.PI ) * r + y );	
+		// 	}
+		// 	cxt.closePath();
+
+		// 	/*状态设置 */
+		// 	cxt.lineWidth = 3;
+		// 	cxt.fillStyle = "#fb3";
+		// 	cxt.strokeStyle = "#fd5";
+		// 	cxt.lineJoin = "round";
+
+		// 	/*绘制，先填充再描边 */
+		// 	cxt.fill();
+		// 	cxt.stroke();
+		// }
+	</script>
+</body>
+</html>
