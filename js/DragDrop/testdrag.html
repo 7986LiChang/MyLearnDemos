@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test Drag and Drop</title>
+	
+</head>
+	<body>
+		<div id="myDiv" style="background:red; width:100px; height:100px; position:absolute; "></div>
+
+		<script type="text/javascript" src="js/EventUtil.js"></script>
+		<script type="text/javascript">
+			var myDiv = document.getElementById("myDiv");
+			var handler = function(){
+				myDiv.style.left = event.clientX + "px";
+				myDiv.style.top = event.clientY + "px";
+			};
+			EventUtil.addHandler(document, "mousemove", handler);
+		</script>
+	</body>
+
+</html>
