@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax基本示例</title>
+	<script type="text/javascript">
+		var xmlhttp;
+		//发送ajax请求函数
+		function loadXMLDoc(url, func){
+			//首先创建XMLHttpRequest对象
+			if(window.XMLHttpRequest){
+				//code for IE7+,Firefox, chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			}else{
+				xmlhttp =  new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			/**
+			 * [onreadystatechange 服务器成功响应]
+			 * @type {[type]}
+			 */
+			xmlhttp.onreadystatechange = func;
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+		}
+		//执行“点击按钮”
+		function myFunction(){
+			loadXMLDoc("ajax/test1.txt", function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					//服务器成功响应
+					document.getElementById("show").innerHTML = xmlhttp.responseText;
+				}
+			});
+			
+		}
+	</script>
+</head>
+<body>
+	<p id="show">this is a Ajax demo</p>
+	<button type="button" onclick="myFunction()">点击我发送Ajax请求</button>
+</body>
+</html>

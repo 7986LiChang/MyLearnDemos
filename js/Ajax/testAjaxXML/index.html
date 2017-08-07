@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax请求XML数据</title>
+	<script type="text/javascript">
+		var xmlhttp;
+		//封装ajax请求
+		function loadXMLDoc(url, func){
+			//首先创建XMLHttpRequest对象
+			if(window.XMLHttpRequest){
+				//code for IE7+,Firefox, chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			}else{
+				xmlhttp =  new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			/**
+			 * [onreadystatechange 服务器成功响应]
+			 * @type {[type]}
+			 */
+			xmlhttp.onreadystatechange = func;
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+		}
+		//点击按钮事件处理
+		function myFunction(){
+			loadXMLDoc("ajax/books.xml", function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					//服务器成功响应，返回XML数据
+					var xmlDoc= xmlhttp.responseXML;
+					var txt = "";
+					//解析xml数据
+					var x = xmlDoc.getElementsByTagName("title");
+					for(var i = 0;i < x.length; i++){
+						//获取第一个子元素的节点值，即书名
+						txt += "<h1>" + x[i].childNodes[0].nodeValue + "</h1>";					
+					}
+					document.getElementById("show").innerHTML = txt;
+				}
+			});
+			
+		}
+	</script>
+</head>
+<body>
+	<p id="show">this is a Ajax demo</p>
+	<button type="button" onclick="myFunction()">点击我发送Ajax请求</button>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<bookstore>
+	<book category="children">
+		<title lang="en">看见</title>
+		<author>柴静</author>
+		<year>2005</year>
+		<price>29.99</price>
+	</book>
+	<book category="cooking">
+		<title lang="en">阿弥陀福么么哒</title>
+		<author>大冰</author>
+		<year>2010</year>
+		<price>29.99</price>
+	</book>
+	<book category="web">
+		<title lang="en">JavaScript高级程序设计</title>
+		<author>Erik T. Ray</author>
+		<year>2011</year>
+		<price>30</price>
+	</book>
+	<book category="web">
+		<title lang="en">你不知道的JS</title>
+		<author>Auth</author>
+		<year>2005</year>
+		<price>29.99</price>
+	</book>
+	<book category="web">
+		<title lang="en">图解HTTP</title>
+		<author>Snow</author>
+		<year>2212</year>
+		<price>43.99</price>
+	</book>
+</bookstore>
