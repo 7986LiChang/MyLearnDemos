@@ -4,93 +4,28 @@
 	<meta charset="UTF-8">
 	<title>Ajax+php实现搜索hint</title>
 	<script type="text/javascript">
-		// //XMLHttpRequest对象
-		// var xmlhttp;
+		function showHint(str){
+			var xmlhttp;
+			if(str.length == 0){
+				document.getElementById("txtHint").innerHTML = "";
+				return ;
+			}
+			if(window.XMLHttpRequest){
+				xmlhttp = new XMLHttpRequest();
+			}
+			else{
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
 
-		// /**
-		//  * [loadXMLDoc 发送Ajax请求获取响应]
-		//  * @param  {[type]} url  [请求地址]
-		//  * @param  {[type]} func [成功响应时调用的函数]
-		//  * @return {[type]}      [description]
-		//  */
-		// function loadXMLDoc(url, func){
-		// 	if(window.XMLHttpRequest){
-		// 		xmlhttp = new XMLHttpRequest();
-		// 	}else{
-		// 		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		// 	}
-		// 	//定义响应函数
-		// 	xmlhttp.onreadystatechange = func;
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+				}
+			};
 
-		// 	//打开并发送请求
-		// 	xmlhttp.open("GET", url, true);
-		// 	xmlhttp.send();
-		// } 
-
-		// function showHint(str){
-		// 	if(str.length == ""){
-		// 		document.getElementById(txtHint).innerHTML = "";
-		// 		return;
-		// 	}
-		// 	loadXMLDoc("ajax/hint.php?q="+str, function(){
-		// 		if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-		// 			document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-		// 		}
-		// 	});
-		// }
-		var xmlHttp
-
-function showHint(str)
-{
-if (str.length==0)
-  { 
-  document.getElementById("txtHint").innerHTML=""
-  return
-  }
-xmlHttp=GetXmlHttpObject()
-if (xmlHttp==null)
-  {
-  alert ("Browser does not support HTTP Request")
-  return
-  } 
-var url="ajax/hint.php"
-url=url+"?q="+str
-url=url+"&sid="+Math.random()
-xmlHttp.onreadystatechange=stateChanged 
-xmlHttp.open("GET",url,true)
-xmlHttp.send(null)
-} 
-
-function stateChanged() 
-{ 
-if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete")
- { 
- document.getElementById("txtHint").innerHTML=xmlHttp.responseText 
- } 
-}
-
-function GetXmlHttpObject()
-{
-var xmlHttp=null;
-try
- {
- // Firefox, Opera 8.0+, Safari
- xmlHttp=new XMLHttpRequest();
- }
-catch (e)
- {
- // Internet Explorer
- try
-  {
-  xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
-  }
- catch (e)
-  {
-  xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
- }
-return xmlHttp;
-}
+			xmlhttp.open("GET", "ajax/gethint.asp?q=" + str +"&sid=" + Math.random(), false);
+			xmlhttp.send();
+		}
 	</script>
 </head>
 <body>
