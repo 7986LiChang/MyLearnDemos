@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CROS</title>
+	
+</head>
+<body>
+	<div id="showtxt">catching data ... </div>
+
+	<script type="text/javascript">
+	//Ajax请求访问http://127.0.0.1:1234
+		var xhr;
+		//创建xhr对象
+		if(window.XMLHttpRequest){
+			xhr = new XMLHttpRequest();
+		}else{
+			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		//定义定义成功获取响应事件处理
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				document.getElementById("showtxt").innerHTML = xhr.responseText;
+			}
+		};
+		//打开请求
+		xhr.open("put", "http://127.0.0.1:1234/", true);
+		//发送请求
+		xhr.send();
+	</script>
+</body>
+</html>
