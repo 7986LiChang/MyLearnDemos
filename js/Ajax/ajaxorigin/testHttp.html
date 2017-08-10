@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>跨域请求服务器数据</title>
+	<script type="text/javascript">
+		function loadXMLDoc(url){
+			var xmlhttp;
+			var txt, data, info;
+			var i;
+			if(window.XMLHttpRequest){
+				xmlhttp = new XMLHttpRequest();
+			}else{
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					txt = "<table border='1'><tr><th>Title</th><th>Artist</th><th>Country</th></tr>";
+					data = xmlhttp.responseXML.getElementsByTagName("CD");
+					for(i = 0; i < data.length; i++){
+						txt += "<tr>";
+						info = data[i].getElementsByTagName("TITLE");
+						{
+							try{
+								txt += "<td>" + info[0].firstChild.nodeValue + "</td>";
+							}catch(er){
+								txt += "<td></td>";
+							}
+						}
+						info = data[i].getElementsByTagName("ARTIST");
+						{
+							try{
+								txt += "<td>" + info[0].firstChild.nodeValue +"</td>";
+							}catch(er){
+								txt += "<td></td>";
+							}
+						}
+						info = data[i].getElementsByTagName("COUNTRY");
+						{
+							try{
+								txt += "<td>" + info[0].firstChild.nodeValue +"</td>";
+							}catch(er){
+								txt += "<td></td>";
+							}
+						}
+						txt += "</tr>";
+					}
+					txt += "</table>";
+					document.getElementById("txtCDInfo").innerHTML = txt;
+				}
+			};
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+		}
+	</script>
+</head>
+<body>
+	<div id="txtCDInfo">
+		<button onclick="loadXMLDoc('http://www.w3school.com.cn/ajax/test1.txt')">获得CD信息</button>
+	</div>
+</body>
+</html>

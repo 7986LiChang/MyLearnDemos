@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>子页面</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//通过postMessage向父页面发送消息
+		var ifr = window.parent; //获取父窗体，即向父页面发送消息的window对象
+		var targetOrigin = "http://localhost:8090"; //要通信的域
+
+		ifr.postMessage("这是传递给父页面的消息", targetOrigin);
+	</script>
+</body>
+</html>
