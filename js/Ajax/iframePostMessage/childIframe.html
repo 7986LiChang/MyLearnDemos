@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>iframe</title>
+	<style type="text/css">
+		html, body{
+			height:100%;
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="container" style="width:100%; height:100%; background-color: rgb(204, 102, 0);" onclick="changecolor()">
+		click to change Color
+	</div>
+
+	<script type="text/javascript">
+		var container = document.getElementById("container");
+
+		//message监听事件，获取来自index.html的消息
+		window.addEventListener("message", function(e){
+			if(e.source != window.parent){
+				//e.source 即接收到消息的来源，应该是index.html的窗口，即iframe的父级别
+				return;
+			}
+			var color = container.style.backgroundColor;
+			//将iframe的颜色通过消息传递给*,全部页面
+			window.parent.postMessage(color, "*");
+		}, false);
+
+		function changecolor(e){
+			var color = container.style.backgroundColor;
+			//首先点击修改颜色
+			if(color == "rgb(204, 102, 0)"){
+				color = "rgb(204, 204, 0)";
+			}else{
+				color = "rgb(204, 102, 0)";
+			}
+			//更改iframe颜色
+			container.style.backgroundColor = color;
+			//将color发消息给index.html,,,统一通过*指定全部
+			window.parent.postMessage(color, "*");
+		}
+	</script>
+</body>
+</html>
