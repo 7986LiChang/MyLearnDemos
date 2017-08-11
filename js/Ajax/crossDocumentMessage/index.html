@@ -5,13 +5,13 @@
 	<title>父页面</title>
 </head>
 <body>
-	<iframe src="http://localhost:8090/MyLearnDemos/js/Ajax/crossDocumentMessage/child.html" style="dispaly:none;" frameborder="0" ></iframe>
+	<iframe src="http://localhost:8080/MyLearnDemos/js/Ajax/crossDocumentMessage/child.html" style="dispaly:none;" frameborder="0" ></iframe>
 
 	<script type="text/javascript">
 		//获取从子页面传来的数据
 		window.addEventListener("message", function(e){
 			//通过origin属性判断消息来源地址
-			if(e.origin == "http://localhost:8090"){
+			if(e.origin == "http://localhost:8080"){
 				//弹出从子页面传过来的信息
 				alert(e.data);
 			}
