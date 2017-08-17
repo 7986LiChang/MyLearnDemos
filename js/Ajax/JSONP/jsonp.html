@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSONP</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function handleResponse(response){
+			alert("Your are at IP address:" + response.ip + ", which is in " + response.city + ", " + response.region_name);
+		}
+
+		var script = document.createElement("script");     //创建script标签
+		script.src = "http://freegeoip.net/json/?callback = handleResponse";   //为script指定src属性，指定回调函数
+		document.body.insertBefore(script, document.body.firstChild);
+	</script>
+</body>
+</html>
