@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>使用空div居中元素</title>
+	<style>
+		html, body{
+			height: 100%;
+		}
+		#floater{
+			height: 50%;
+			margin-bottom: -120px;
+		}
+		#content{
+			clear: both;
+			height: 240px;
+			position: relative;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+<body>
+	<!-- 利用一个空div -->
+	<div id="floater">
+<!-- 		this block is white for center display
+ -->	</div>
+ 	<div id="content">
+ 		Content section
+ 	</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>垂直水平居中，不受元素宽高限制</title>
+	<style>
+	/*绝对定位，明确知道居中元素宽高*/
+	html, body{
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+	#wrap{
+			width: 400px;
+			height: 400px;
+			position: absolute;
+			background-color: tomato;
+			left: 50%;
+			top:50%;
+			transform: translate(-50%, -50%);
+		}
+	/*	#wrap{
+			width: 400px;
+			height: 400px;
+			position: relative;
+			background-color: tomato;
+		}*/
+
+		/*#container{
+			width: 200px;
+			height: 200px;
+			background-color: #eacfa9;
+			position: absolute;
+			margin:auto;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+		}*/
+
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="container">
+			
+		</div>
+	</div>
+</body>
+</html>

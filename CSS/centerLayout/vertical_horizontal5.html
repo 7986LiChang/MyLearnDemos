@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>使用flex布局,适用于移动端，pc端有兼容性问题</title>
+	<style>
+	/*绝对定位，明确知道居中元素宽高*/
+		#wrap{
+			width: 400px;
+			height: 400px;
+			background-color: tomato;
+			display: flex;
+			justify-content: center;  /*水平轴*/
+			align-items: center;
+		}
+
+		#container{
+			width: 200px;
+			height: 200px;
+			background-color: #eacfa9;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="container">
+			hello
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery实现的元素垂直居中插件</title>
+	<!-- 使用google CDN引用jquery -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<script type="text/javascript" src="vertical_horizontal.js"></script>
+	<style>
+		.wrap{
+			position: relative;
+			background-color: tomato;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="container">hello</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".wrap").vhAlign();
+		});
+	</script>
+</body>
+</html>
