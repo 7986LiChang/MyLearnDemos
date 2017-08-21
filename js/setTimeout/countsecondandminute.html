@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计时分秒</title>
+	<script type="text/javascript">
+		var min = -1,
+			sec = 0;
+		function countMin(){
+			min++;
+			document.getElementById("mintxt").value = min;
+			setTimeout("countMin()", 60000); //每分钟执行一次
+		}
+		function countSec(){
+			sec++;
+			document.getElementById("sectxt").value = sec % 60;
+			setTimeout("countSec()", 1000); //每秒执行一次
+		}
+	</script>
+</head>
+<body>
+	<table>
+		<tr align="center" valign="center">
+			<td>你在当前页面停留的时间：</td>
+			<td>
+				<form name="displaymin">
+					<input id="mintxt" type="text" name="displayBox" value="0" size="4">
+				</form>
+			</td>
+			<td>分</td>
+			<td>
+				<form name="displaysec">
+					<input id="sectxt" type="text" name="displayBox" value="0" size="4">
+				</form>
+			</td>
+			<td>秒</td>
+		</tr>
+	</table>
+
+	<script>
+		countMin(); //执行计分
+		countSec(); //执行计秒
+	</script>
+</body>
+</html>

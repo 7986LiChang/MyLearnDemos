@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>两个定时器，分别停止以及继续计时</title>
+	<script type="text/javascript">
+		var x = 0, y = 0;
+		var meter1, meter2;
+		function count1(){
+			x++;
+			document.getElementById("txt1").value = x;
+			meter1 = setTimeout("count1()", 1000);  //记录timeoutId值
+		}
+		function count2(){
+			y++;
+			document.getElementById("txt2").value = y;
+			meter2 = setTimeout("count2()", 1000);  //记录timeoutId值
+		}
+	</script>
+</head>
+<body>
+	<form name="display1">
+		<input id="txt1" type="text" value="0" size="4" name="box1">
+		<input type="button" value="停止计时" onclick="clearTimeout(meter1)">
+		<input type="button" value="继续计时" onclick="count1()">
+	</form>
+	<form name="display2">
+		<input id="txt2" type="text" value="0" size="4" name="box1">
+		<input type="button" value="停止计时" onclick="clearTimeout(meter2)">
+		<input type="button" value="继续计时" onclick="count2()">
+	</form>
+
+	<script>
+		count1();
+		count2();
+	</script>
+</body>
+</html>

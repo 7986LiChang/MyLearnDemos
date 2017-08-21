@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计秒器</title>
+	<script type="text/javascript">
+		//秒数递增，并改变input的值
+		var count = 0;
+		function countSecond(){
+			count++;
+			document.getElementById("input").value= count;
+			setTimeout("countSecond()", 1000);    //setTimeout回调函数要加""
+		}
+	</script>
+</head>
+<body>
+	<form name="haorooms">
+		<input id="input" type="text" name="input" value="0" size="4">
+	</form>
+
+	<script type="text/javascript">
+	    /*var count = 0;
+	    setInterval(function(){
+	    	count++;
+	    	document.getElementById("input").value= count;
+	    }, 1000);  //只执行一次*/
+		countSecond(); 
+	</script>
+</body>
+</html>
