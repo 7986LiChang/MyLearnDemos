@@ -9,7 +9,7 @@
 		function countSecond(){
 			count++;
 			document.getElementById("input").value= count;
-			setTimeout("countSecond()", 1000);    //setTimeout回调函数要加""
+			setTimeout("countSecond()", 1000);    //setTimeout回调函数要加"",会一直循环调用
 		}
 	</script>
 </head>
