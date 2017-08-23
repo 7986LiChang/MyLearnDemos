@@ -17,9 +17,10 @@
 		  },
 
 		  componentDidMount() {
+		  //promise属性，是一个对象，代表一个异步操作，这里用getJson获取服务器中的json数据
 		    this.props.promise.then(
-		      value => this.setState({loading: false, data: value}),
-		      error => this.setState({loading: false, error: error}));
+		      value => this.setState({loading: false, data: value}),    //promise对象状态变为resolved时调用，即异步请求成功时的回调函数
+		      error => this.setState({loading: false, error: error}));  //promise状态变为rejected时调用，即异步请求失败时的回调函数
 		  },
 
 		  render: function() {
@@ -30,7 +31,7 @@
 		      return <span>Error: {this.state.error.message}</span>;
 		    }
 		    else {
-		      var repos = this.state.data.items;
+		      var repos = this.state.data.items;   //data ：getJSON请求成功获取的json数组，items将其中每一项转为数组
 		      var repoList = repos.map(function (repo) {
 		        return (
 		          <li>
@@ -40,7 +41,7 @@
 		      });
 		      return (
 		        <main>
-		          <h1>Most Popular JavaScript Projects in Github</h1>
+		          <h1>Most Popular React Projects in Github</h1>
 		          <ol>{repoList}</ol>
 		        </main>
 		      );
@@ -50,7 +51,7 @@
 
 	ReactDOM.render(
 	  <RepoList
-	    promise={$.getJSON('https://api.github.com/search/repositories?q=javascript&sort=stars')}
+	    promise={$.getJSON('https://api.github.com/search/repositories?q=react&sort=stars')}
 	  />,
 	  document.body
 	);

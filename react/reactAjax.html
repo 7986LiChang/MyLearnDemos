@@ -19,6 +19,7 @@ var UserGist = React.createClass({
   },
   componentDidMount: function() {
     $.get(this.props.source, function(result) {
+    //Ajax请求成功更改state,并重新渲染render
       var lastGist = result[0];
       if (this.isMounted()) {
         this.setState({
