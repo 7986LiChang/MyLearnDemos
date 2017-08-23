@@ -9,11 +9,11 @@ http.createServer(function(requset, response){
 	var params = urllib.parse(requset.url, true);
 
 	if(params.query && params.query.callback){
-		var str = params.query.callback + '(' + JSON.stringfy(data) + ')';  //jsonp
+		var str = params.query.callback + '(' + JSON.stringify(data) + ')';  //jsonp
 		response.end(str);  //将str发回客户端
 	}
 	else{
-		response.end(JSON.stringfy(data));   //普通json
+		response.end(JSON.stringify(data));   //普通json
 	}
 }).listen(1234);
 
